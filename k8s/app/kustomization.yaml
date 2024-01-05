@@ -3,3 +3,8 @@ kind: Kustomization
 resources:
   - ns.yaml
   - deploy.yaml
+
+namespace: app
+
+commonLabels:
+  app: app
