@@ -1,0 +1,32 @@
+version: "3"
+dotenv: [".env"]
+silent: true
+
+vars:
+  CLUSTER_NAME: "flux"
+  CONTEXT_NAME: "k3d-{{.CLUSTER_NAME}}"
+  KUBECTL: "kubectl --context={{.CONTEXT_NAME}}"
+
+tasks:
+
+  default:
+    cmds:
+    - task --list
+  
+  #  _    _____     _
+  # | | _|___ /  __| |
+  # | |/ / |_ \ / _` |
+  # |   < ___) | (_| |
+  # |_|\_\____/ \__,_|
+
+  k3d:create:
+    prefix: ⚙️ > create k3d cluster
+    desc: create k3d cluster
+    cmds:
+    - k3d cluster create --config=k3d/config.yaml
+
+  k3d:destroy:
+    prefix: ⚙️ > destroy
+    desc: destroy k3d cluster
+    cmds:
+      - k3d cluster delete --config=k3d/config.yaml
