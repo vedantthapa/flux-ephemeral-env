@@ -20,4 +20,3 @@ jobs:
       with:
         add: '.'
         message: "[ci skip] ephemeral env from ${{ steps.comment-branch.outputs.head_ref }}"
-        signoff: true
