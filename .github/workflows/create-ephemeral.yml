@@ -8,14 +8,15 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy-ephemeral')
     
     steps:
-    - name: Set commit status as pending
-      uses: myrotvorets/set-commit-status-action@master
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        status: pending
     - name: Get PR branch
       uses: xt0rted/pull-request-comment-branch@v2
       id: comment-branch
+    - name: Set Commit Status as Pending
+      uses: myrotvorets/set-commit-status-action@master
+      with:
+        sha: ${{ steps.comment-branch.outputs.head_sha }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        status: pending
     - name: Checkout Repository
       uses: actions/checkout@v4
     - name: Generate Flux Manifests
