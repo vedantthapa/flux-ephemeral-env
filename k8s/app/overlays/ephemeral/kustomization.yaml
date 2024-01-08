@@ -7,7 +7,7 @@ resources:
 patches:
   - path: deploy.yaml
 
-namespace: ${BRANCH}
+namespace: ${BRANCH_NAME}
 
 commonLabels:
   app: ephemeral
