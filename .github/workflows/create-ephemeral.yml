@@ -8,9 +8,14 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     
     steps:
+    - name: Get PR branch
+      uses: xt0rted/pull-request-comment-branch@v2
+      id: comment-branch
     - name: Checkout Repository
       uses: actions/checkout@v4
     - name: Generate Flux Manifests
       run: ./scripts/create-env.sh dev
     - name: Commit Manifests
-      run: ls -la ./k8s/app/overlays/ephemeral-instances/
+      run: |
+        ls -la ./k8s/app/overlays/ephemeral-instances/
+        echo ${{ steps.comment-branch.outputs.head_ref }}
