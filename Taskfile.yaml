@@ -2,11 +2,6 @@ version: "3"
 dotenv: [".env"]
 silent: true
 
-vars:
-  CLUSTER_NAME: "flux"
-  CONTEXT_NAME: "k3d-{{.CLUSTER_NAME}}"
-  KUBECTL: "kubectl --context={{.CONTEXT_NAME}}"
-
 tasks:
 
   default:
