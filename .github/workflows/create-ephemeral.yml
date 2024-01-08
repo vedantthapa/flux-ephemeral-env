@@ -3,7 +3,7 @@ on:
   issue_comment:
     types: [created]
 jobs:
-  update-yaml:
+  commit-flux-sync:
     runs-on: ubuntu-latest
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
     
@@ -14,8 +14,10 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
     - name: Generate Flux Manifests
-      run: ./scripts/create-env.sh dev
-    - name: Commit Manifests
-      run: |
-        ls -la ./k8s/app/overlays/ephemeral-instances/
-        echo ${{ steps.comment-branch.outputs.head_ref }}
+      run: ./scripts/create-env.sh ${{ steps.comment-branch.outputs.head_ref }}
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: '.'
+        message: "[ci skip] ephemeral env from ${{ steps.comment-branch.outputs.head_ref }}"
+        signoff: true
